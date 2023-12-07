@@ -1,0 +1,31 @@
+Données sur les victimes du conflit :
+
+    Nombre de décès :
+        Sources possibles : Gouvernements israélien et palestinien, organisations internationales comme l'ONU, bases de données de médias.
+
+    Nombre de prisonniers :
+        Sources possibles : Ministères de la Justice, organisations de défense des droits de l'homme, organisations internationales.
+
+    Catégorie de victimes (civils, militaires, enfants, femmes) :
+        Sources possibles : Rapports des Nations Unies, organisations de défense des droits de l'homme, témoignages sur le terrain.
+
+Données sur l'exode palestinien :
+4. Nombre de réfugiés palestiniens :
+
+    Sources possibles : Office de secours et de travaux des Nations Unies pour les réfugiés de Palestine dans le Proche-Orient (UNRWA), Haut Commissariat des Nations Unies pour les réfugiés (UNHCR), gouvernements locaux.
+
+    Lieux de résidence des réfugiés (camps) :
+        Sources possibles : UNRWA, organisations locales, gouvernements.
+
+Données sur les implantations israéliennes :
+6. Nombre de colonies israéliennes :
+
+    Sources possibles : Gouvernement israélien, organisations non gouvernementales (ONG) israéliennes et internationales.
+
+    Nombre d'habitants dans les implantations :
+        Sources possibles : Gouvernement israélien, organisations de recherche démographique.
+
+Données sur la démographie d'Israël :
+8. Flux migratoire par nationalité :
+
+    Sources possibles : Ministères de l'Intérieur, données de recensement
