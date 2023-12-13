@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>IsraeliSettlements_Inhabitants_ETL_python</name>
+    <name>IsraeliSettlements_ETL_python</name>
     <description/>
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
     </parameters>
@@ -427,10 +428,10 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2023/12/08 01:57:47.561</created_date>
+    <created_date>2023/12/12 19:46:57.973</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2023/12/08 01:57:47.561</modified_date>
-    <key_for_session_key>H4sIAAAAAAAA/wMAAAAAAAAAAAA=</key_for_session_key>
+    <modified_date>2023/12/12 19:46:57.973</modified_date>
+    <key_for_session_key/>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -456,7 +457,7 @@
     <include_input_as_output>N</include_input_as_output>
     <py_script># python script</py_script>
     <load_script_at_runtime>Y</load_script_at_runtime>
-    <script_to_load>C:\Users\tioua\OneDrive\Desktop\BI PROJECT\DataTransformation\IsraeliSettlements_Inhabitants_Transformation\PythonCode\automate_code.py</script_to_load>
+    <script_to_load>C:\Users\tioua\OneDrive\Desktop\BI PROJECT\DataTransformation\IsraeliSettlements_Transformation\PythonCode\automate_code.py</script_to_load>
     <continue_on_unset_vars>N</continue_on_unset_vars>
     <py_vars_to_get/>
     <include_frame_row_index>N</include_frame_row_index>
@@ -473,8 +474,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>176</xloc>
-      <yloc>128</yloc>
+      <xloc>192</xloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

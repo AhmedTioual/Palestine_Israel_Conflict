@@ -132,7 +132,7 @@ def automateExtractionData(year, max_retries=6):
             if download_response.status_code == 200 and download_response.content and get_file_size(download_response) > 3: 
                 # Save the downloaded file
                 new_location = "C:\\Users\\tioua\\OneDrive\\Desktop\\BI PROJECT\\Data\\NumberOfInhabitants"
-                file_path = f'{new_location}\\data_{year}.xlsx'
+                file_path = f'{new_location}\\IsraeliSettlements_Inhabitants_data_{year}.xlsx'
                 with open(file_path, 'wb') as file:
                     file.write(download_response.content)
                 
@@ -152,7 +152,7 @@ def automateExtractionData(year, max_retries=6):
 #this function use concurrent.futures model for downlaod multiple file at sometime
 def automateExtractionData_parallel(year_start,year_end):
     try:
-        with ThreadPoolExecutor(max_workers=10) as executor:
+        with ThreadPoolExecutor(max_workers=20) as executor:
             # Use list comprehension to submit tasks to the ThreadPoolExecutor
             tasks = [executor.submit(automateExtractionData, year) for year in range(year_start,year_end+1)]
             
