@@ -51,7 +51,7 @@ def automateExtractionData(url,payload):
 
 def automateExtractionData_parallel(pages):
     try:
-        with ThreadPoolExecutor(max_workers=4) as executor:
+        with ThreadPoolExecutor(max_workers=10) as executor:
             # Use list comprehension to submit tasks to the ThreadPoolExecutor
             tasks = [executor.submit(automateExtractionData, key,value) for key,value in pages.items()]
             
