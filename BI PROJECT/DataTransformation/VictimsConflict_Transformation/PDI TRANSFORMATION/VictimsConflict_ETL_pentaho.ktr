@@ -522,15 +522,73 @@ Note : Data updated until October 6, 2023</note>
       <drawshadow>Y</drawshadow>
     </notepad>
   </notepads>
+  <connection>
+    <name>MySQLPDIConnection</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>conflictdatawarehouse</database>
+    <port>3306</port>
+    <username>root</username>
+    <password>Encrypted 2beecc6a71fc69ecbf949ff298cc2fe83</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>EXTRA_OPTION_MYSQL.defaultFetchSize</code>
+        <attribute>500</attribute>
+      </attribute>
+      <attribute>
+        <code>EXTRA_OPTION_MYSQL.useCursorFetch</code>
+        <attribute>true</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>3306</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>STREAM_RESULTS</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
   <order>
     <hop>
-      <from>Convert Columns to uppercase and Remove spaces</from>
+      <from>Columns to UpperCase</from>
       <to>Get Country Name &amp; ID</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Dim_Country</from>
-      <to>Convert Columns to uppercase and Remove spaces</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -644,11 +702,6 @@ Note : Data updated until October 6, 2023</note>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Dim_Event</from>
-      <to>Stream lookup</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Stream lookup</from>
       <to>Sort rows</to>
       <enabled>Y</enabled>
@@ -664,18 +717,8 @@ Note : Data updated until October 6, 2023</note>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Group by 2</from>
-      <to>Add Category ID</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Sort rows 2</from>
       <to>Group by 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Add Category ID</from>
-      <to>Dim_Category</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -738,42 +781,57 @@ Note : Data updated until October 6, 2023</note>
       <to>Fact_VictimsConflict</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>Group by 2</from>
+      <to>Generate ID</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Generate ID</from>
+      <to>Dim_Category</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Country</from>
+      <to>Generate Unique ID</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Generate Unique ID</from>
+      <to>Columns to UpperCase</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Columns to UpperCase</from>
+      <to>Dim_Country</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Dim_Country</from>
+      <to>Insert / update</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Dim_Event</from>
+      <to>Event Table</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Dim_Category</from>
+      <to>Insert / update 2 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Fact_VictimsConflict</from>
+      <to>Insert / update 2 3</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Event Table</from>
+      <to>Stream lookup</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
-  <step>
-    <name>Add Category ID</name>
-    <type>Sequence</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <valuename>valuename</valuename>
-    <use_database>N</use_database>
-    <connection/>
-    <schema/>
-    <seqname>SEQ_</seqname>
-    <use_counter>Y</use_counter>
-    <counter_name/>
-    <start_at>1</start_at>
-    <increment_by>1</increment_by>
-    <max_value>999999999</max_value>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1040</xloc>
-      <yloc>352</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step>
     <name>Add Children Category</name>
     <type>ScriptValueMod</type>
@@ -936,10 +994,10 @@ if (Age &lt;= 18) {
     </GUI>
   </step>
   <step>
-    <name>Convert Columns to uppercase and Remove spaces</name>
+    <name>Columns to UpperCase</name>
     <type>StringOperations</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -992,7 +1050,7 @@ if (Age &lt;= 18) {
     <name>Dim_Category</name>
     <type>SelectValues</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -1001,8 +1059,7 @@ if (Age &lt;= 18) {
     </partitioning>
     <fields>
       <field>
-        <name>valuename</name>
-        <rename>Category_ID</rename>
+        <name>Category_ID</name>
       </field>
       <field>
         <name>Category</name>
@@ -1025,10 +1082,10 @@ if (Age &lt;= 18) {
     </GUI>
   </step>
   <step>
-    <name>Dim_Country</name>
+    <name>Country</name>
     <type>ExcelInput</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -1130,7 +1187,7 @@ if (Age &lt;= 18) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>960</xloc>
+      <xloc>912</xloc>
       <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1139,14 +1196,14 @@ if (Age &lt;= 18) {
     <name>Dim_Event</name>
     <type>FilterRows</type>
     <description>This</description>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <send_true_to>Stream lookup</send_true_to>
+    <send_true_to>Event Table</send_true_to>
     <send_false_to/>
     <compare>
       <condition>
@@ -1165,14 +1222,14 @@ if (Age &lt;= 18) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1120</xloc>
+      <xloc>1056</xloc>
       <yloc>496</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Result1 2</name>
-    <type>GroupBy</type>
+    <name>Fact_VictimsConflict</name>
+    <type>IfNull</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1181,31 +1238,19 @@ if (Age &lt;= 18) {
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <all_rows>N</all_rows>
-    <ignore_aggregate>N</ignore_aggregate>
-    <field_ignore/>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>grp</prefix>
-    <add_linenr>N</add_linenr>
-    <linenr_fieldname/>
-    <give_back_row>N</give_back_row>
-    <group>
-      <field>
-        <name>Country_ID</name>
-      </field>
-      <field>
-        <name>Event_ID</name>
-      </field>
-      <field>
-        <name>Category_ID</name>
-      </field>
-    </group>
+    <replaceAllByValue/>
+    <replaceAllMask/>
+    <selectFields>Y</selectFields>
+    <selectValuesType>N</selectValuesType>
+    <setEmptyStringAll>N</setEmptyStringAll>
+    <valuetypes>
+      </valuetypes>
     <fields>
       <field>
-        <aggregate>NomberOfDeaths</aggregate>
-        <subject/>
-        <type>COUNT_ANY</type>
-        <valuefield/>
+        <name>NumberOfPrisoners</name>
+        <value>0</value>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
       </field>
     </fields>
     <attributes/>
@@ -1217,8 +1262,8 @@ if (Age &lt;= 18) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1504</xloc>
-      <yloc>496</yloc>
+      <xloc>1792</xloc>
+      <yloc>576</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1250,6 +1295,104 @@ if (Age &lt;= 18) {
     </GUI>
   </step>
   <step>
+    <name>Generate ID</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>//Script here
+
+var Category_ID = Category.charCodeAt(0);</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>Category_ID</name>
+        <rename>Category_ID</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1040</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Generate Unique ID</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>function generateUniqueCode(str, maxLength) {
+    var hash = str.toLowerCase().split('').reduce(function (hash, char) {
+        return (hash &lt;&lt; 5) - hash + char.charCodeAt(0);
+    }, 0);
+    return Math.abs(hash) % Math.pow(10, maxLength);
+}
+
+var Country_ID = generateUniqueCode(Country_Name, 3);
+</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>Country_ID</name>
+        <rename>Country_ID</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1072</xloc>
+      <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Generate rows</name>
     <type>RowGenerator</type>
     <description/>
@@ -1276,7 +1419,7 @@ if (Age &lt;= 18) {
       </output>
     </remotesteps>
     <GUI>
-      <xloc>80</xloc>
+      <xloc>64</xloc>
       <yloc>496</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1292,7 +1435,7 @@ if (Age &lt;= 18) {
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <from>Convert Columns to uppercase and Remove spaces</from>
+    <from>Columns to UpperCase</from>
     <input_sorted>N</input_sorted>
     <preserve_memory>Y</preserve_memory>
     <sorted_list>Y</sorted_list>
@@ -1346,24 +1489,14 @@ if (Age &lt;= 18) {
       <jsScript>
         <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>function getYearFromDate(dateString) {
-    var yearMatch = /\b\d{4}\b/.exec(dateString);
-    return yearMatch ? yearMatch[0] : null;
-}
-
-
-function removeNumbers(inputString) {
-    return inputString.replace(/\d+/g, '');
-}
-
-var codeHTML = removeCRLF(Table);
+        <jsScript_script>var codeHTML = removeCRLF(Table);
 
 // Combine both regex patterns into a single pattern
 var combinedRegex = /([^&lt;]+)&lt;br>\s*&lt;span class="tooltip-content">(.*?)&lt;\/span>/;
 var matches = combinedRegex.exec(codeHTML);
 
 // Extract the values using array destructuring
-var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNumbers(matches[2])] : [null, null];
+var [Event_Year, Event_Name] = matches ? [/\b\d{4}\b/.exec(matches[1])[0], matches[2].replace(/\d+/g, '')] : [null, null];
 </jsScript_script>
       </jsScript>
     </jsScripts>
@@ -1394,7 +1527,7 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
       </output>
     </remotesteps>
     <GUI>
-      <xloc>624</xloc>
+      <xloc>608</xloc>
       <yloc>496</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1484,8 +1617,131 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
       </output>
     </remotesteps>
     <GUI>
-      <xloc>192</xloc>
+      <xloc>176</xloc>
       <yloc>496</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Prisoners Data</name>
+    <type>ExcelInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <header>Y</header>
+    <noempty>Y</noempty>
+    <stoponempty>N</stoponempty>
+    <filefield/>
+    <sheetfield/>
+    <sheetrownumfield/>
+    <rownumfield/>
+    <sheetfield/>
+    <filefield/>
+    <limit>0</limit>
+    <encoding/>
+    <add_to_result_filenames>Y</add_to_result_filenames>
+    <accept_filenames>N</accept_filenames>
+    <accept_field/>
+    <accept_stepname/>
+    <file>
+      <name>C:\Users\tioua\OneDrive\Desktop\BI PROJECT\Data\NumberOfPrisoners\Prisoners_Data.xlsx</name>
+      <filemask/>
+      <exclude_filemask/>
+      <file_required>N</file_required>
+      <include_subfolders>N</include_subfolders>
+    </file>
+    <fields>
+      <field>
+        <name>Category</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>NumberOfPrisoners</name>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>Year</name>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+      <field>
+        <name>Country</name>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+      </field>
+    </fields>
+    <sheets>
+      <sheet>
+        <name>Sheet1</name>
+        <startrow>0</startrow>
+        <startcol>0</startcol>
+      </sheet>
+    </sheets>
+    <strict_types>N</strict_types>
+    <error_ignored>N</error_ignored>
+    <error_line_skipped>N</error_line_skipped>
+    <bad_line_files_destination_directory/>
+    <bad_line_files_extension>warning</bad_line_files_extension>
+    <error_line_files_destination_directory/>
+    <error_line_files_extension>error</error_line_files_extension>
+    <line_number_files_destination_directory/>
+    <line_number_files_extension>line</line_number_files_extension>
+    <shortFileFieldName/>
+    <pathFieldName/>
+    <hiddenFieldName/>
+    <lastModificationTimeFieldName/>
+    <uriNameFieldName/>
+    <rootUriNameFieldName/>
+    <extensionFieldName/>
+    <sizeFieldName/>
+    <spreadsheet_type>POI</spreadsheet_type>
+    <password>Encrypted </password>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>832</xloc>
+      <yloc>688</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1513,6 +1769,58 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
     <GUI>
       <xloc>240</xloc>
       <yloc>64</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Result1 2</name>
+    <type>GroupBy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <all_rows>N</all_rows>
+    <ignore_aggregate>N</ignore_aggregate>
+    <field_ignore/>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>grp</prefix>
+    <add_linenr>N</add_linenr>
+    <linenr_fieldname/>
+    <give_back_row>N</give_back_row>
+    <group>
+      <field>
+        <name>Country_ID</name>
+      </field>
+      <field>
+        <name>Event_ID</name>
+      </field>
+      <field>
+        <name>Category_ID</name>
+      </field>
+    </group>
+    <fields>
+      <field>
+        <aggregate>NumberOfDeaths</aggregate>
+        <subject/>
+        <type>COUNT_ANY</type>
+        <valuefield/>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1504</xloc>
+      <yloc>496</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1567,6 +1875,99 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
     <GUI>
       <xloc>240</xloc>
       <yloc>320</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Result3 2</name>
+    <type>StreamLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <from>Results Prisoners</from>
+    <input_sorted>N</input_sorted>
+    <preserve_memory>Y</preserve_memory>
+    <sorted_list>N</sorted_list>
+    <integer_pair>N</integer_pair>
+    <lookup>
+      <key>
+        <name>Country_ID</name>
+        <field>Country_ID_P</field>
+      </key>
+      <key>
+        <name>Event_ID</name>
+        <field>Event_ID_P</field>
+      </key>
+      <key>
+        <name>Category_ID</name>
+        <field>Category_ID_P</field>
+      </key>
+      <value>
+        <name>NumberOfPrisoners</name>
+        <rename>NumberOfPrisoners</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1648</xloc>
+      <yloc>576</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Results Prisoners</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>Country_ID</name>
+        <rename>Country_ID_P</rename>
+      </field>
+      <field>
+        <name>Event_ID</name>
+        <rename>Event_ID_P</rename>
+      </field>
+      <field>
+        <name>Category_ID</name>
+        <rename>Category_ID_P</rename>
+      </field>
+      <field>
+        <name>NumberOfPrisoners</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1504</xloc>
+      <yloc>688</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1723,17 +2124,20 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
     <fields>
       <field>
         <name>Event_ID</name>
+        <rename/>
       </field>
       <field>
         <name>Event_Name</name>
+        <rename/>
       </field>
       <field>
         <name>Event_Year</name>
+        <rename>Event_Date</rename>
       </field>
       <select_unspecified>N</select_unspecified>
       <meta>
-        <name>Event_Year</name>
-        <rename>Event_Year</rename>
+        <name>Event_Date</name>
+        <rename>Event_Date</rename>
         <type>Integer</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -1758,7 +2162,7 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
       </output>
     </remotesteps>
     <GUI>
-      <xloc>976</xloc>
+      <xloc>944</xloc>
       <yloc>496</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1789,7 +2193,7 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
       </output>
     </remotesteps>
     <GUI>
-      <xloc>448</xloc>
+      <xloc>432</xloc>
       <yloc>496</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1873,6 +2277,47 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
     </GUI>
   </step>
   <step>
+    <name>Select values 2</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>Year</name>
+      </field>
+      <field>
+        <name>Category</name>
+        <rename>Category_Name</rename>
+      </field>
+      <field>
+        <name>Country</name>
+      </field>
+      <field>
+        <name>NumberOfPrisoners</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1008</xloc>
+      <yloc>688</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Sort rows</name>
     <type>SortRows</type>
     <description/>
@@ -1925,7 +2370,7 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1392</xloc>
+      <xloc>1408</xloc>
       <yloc>496</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1969,6 +2414,48 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
     <GUI>
       <xloc>832</xloc>
       <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort rows 3</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>Year</name>
+        <ascending>N</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1168</xloc>
+      <yloc>688</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2041,7 +2528,7 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
       </output>
     </remotesteps>
     <GUI>
-      <xloc>320</xloc>
+      <xloc>304</xloc>
       <yloc>496</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2057,7 +2544,7 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <from>Dim_Event</from>
+    <from>Event Table</from>
     <input_sorted>N</input_sorted>
     <preserve_memory>Y</preserve_memory>
     <sorted_list>N</sorted_list>
@@ -2065,12 +2552,12 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
     <lookup>
       <key>
         <name>DateOfEvent</name>
-        <field>Event_Year</field>
+        <field>Event_Date</field>
       </key>
       <value>
         <name>Event_ID</name>
         <rename>Event_ID</rename>
-        <default>0</default>
+        <default/>
         <type>Integer</type>
       </value>
       <value>
@@ -2133,6 +2620,68 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
     <GUI>
       <xloc>1168</xloc>
       <yloc>256</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Stream lookup 3</name>
+    <type>StreamLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <from>Stream lookup</from>
+    <input_sorted>N</input_sorted>
+    <preserve_memory>Y</preserve_memory>
+    <sorted_list>N</sorted_list>
+    <integer_pair>N</integer_pair>
+    <lookup>
+      <key>
+        <name>Year</name>
+        <field>DateOfEvent</field>
+      </key>
+      <key>
+        <name>Category_Name</name>
+        <field>Category</field>
+      </key>
+      <key>
+        <name>Country</name>
+        <field>Country_Name</field>
+      </key>
+      <value>
+        <name>Category_ID</name>
+        <rename>Category_ID</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>Country_ID</name>
+        <rename>Country_ID</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+      <value>
+        <name>Event_ID</name>
+        <rename>Event_ID</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1296</xloc>
+      <yloc>688</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3507,275 +4056,7 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
     </GUI>
   </step>
   <step>
-    <name>Stream lookup 3</name>
-    <type>StreamLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <from>Stream lookup</from>
-    <input_sorted>N</input_sorted>
-    <preserve_memory>Y</preserve_memory>
-    <sorted_list>N</sorted_list>
-    <integer_pair>N</integer_pair>
-    <lookup>
-      <key>
-        <name>Year</name>
-        <field>DateOfEvent</field>
-      </key>
-      <key>
-        <name>Category_Name</name>
-        <field>Category</field>
-      </key>
-      <key>
-        <name>Country</name>
-        <field>Country_Name</field>
-      </key>
-      <value>
-        <name>Category_ID</name>
-        <rename>Category_ID</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>Country_ID</name>
-        <rename>Country_ID</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-      <value>
-        <name>Event_ID</name>
-        <rename>Event_ID</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1296</xloc>
-      <yloc>640</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Prisoners Data</name>
-    <type>ExcelInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <header>Y</header>
-    <noempty>Y</noempty>
-    <stoponempty>N</stoponempty>
-    <filefield/>
-    <sheetfield/>
-    <sheetrownumfield/>
-    <rownumfield/>
-    <sheetfield/>
-    <filefield/>
-    <limit>0</limit>
-    <encoding/>
-    <add_to_result_filenames>Y</add_to_result_filenames>
-    <accept_filenames>N</accept_filenames>
-    <accept_field/>
-    <accept_stepname/>
-    <file>
-      <name>C:\Users\tioua\OneDrive\Desktop\BI PROJECT\Data\NumberOfPrisoners\Prisoners_Data.xlsx</name>
-      <filemask/>
-      <exclude_filemask/>
-      <file_required>N</file_required>
-      <include_subfolders>N</include_subfolders>
-    </file>
-    <fields>
-      <field>
-        <name>Category</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-      </field>
-      <field>
-        <name>NumberOfPrisoners</name>
-        <type>Integer</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-      </field>
-      <field>
-        <name>Year</name>
-        <type>Integer</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-      </field>
-      <field>
-        <name>Country</name>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-      </field>
-    </fields>
-    <sheets>
-      <sheet>
-        <name>Sheet1</name>
-        <startrow>0</startrow>
-        <startcol>0</startcol>
-      </sheet>
-    </sheets>
-    <strict_types>N</strict_types>
-    <error_ignored>N</error_ignored>
-    <error_line_skipped>N</error_line_skipped>
-    <bad_line_files_destination_directory/>
-    <bad_line_files_extension>warning</bad_line_files_extension>
-    <error_line_files_destination_directory/>
-    <error_line_files_extension>error</error_line_files_extension>
-    <line_number_files_destination_directory/>
-    <line_number_files_extension>line</line_number_files_extension>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
-    <spreadsheet_type>POI</spreadsheet_type>
-    <password>Encrypted </password>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>832</xloc>
-      <yloc>640</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows 3</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>Year</name>
-        <ascending>N</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1168</xloc>
-      <yloc>640</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Select values 2</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <name>Year</name>
-      </field>
-      <field>
-        <name>Category</name>
-        <rename>Category_Name</rename>
-      </field>
-      <field>
-        <name>Country</name>
-      </field>
-      <field>
-        <name>NumberOfPrisoners</name>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1008</xloc>
-      <yloc>640</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Results Prisoners</name>
+    <name>Dim_Country</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -3788,18 +4069,10 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
     <fields>
       <field>
         <name>Country_ID</name>
-        <rename>Country_ID_P</rename>
+        <rename/>
       </field>
       <field>
-        <name>Event_ID</name>
-        <rename>Event_ID_P</rename>
-      </field>
-      <field>
-        <name>Category_ID</name>
-        <rename>Category_ID_P</rename>
-      </field>
-      <field>
-        <name>NumberOfPrisoners</name>
+        <name>Country_Name</name>
         <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
@@ -3813,14 +4086,14 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1504</xloc>
-      <yloc>640</yloc>
+      <xloc>1440</xloc>
+      <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Result3 2</name>
-    <type>StreamLookup</type>
+    <name>Insert / update</name>
+    <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -3829,29 +4102,33 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <from>Results Prisoners</from>
-    <input_sorted>N</input_sorted>
-    <preserve_memory>Y</preserve_memory>
-    <sorted_list>N</sorted_list>
-    <integer_pair>N</integer_pair>
+    <connection>MySQLPDIConnection</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
     <lookup>
+      <schema>conflictdatawarehouse</schema>
+      <table>dim_country</table>
       <key>
         <name>Country_ID</name>
-        <field>Country_ID_P</field>
+        <field>Country_ID</field>
+        <condition>=</condition>
+        <name2/>
       </key>
       <key>
-        <name>Event_ID</name>
-        <field>Event_ID_P</field>
-      </key>
-      <key>
-        <name>Category_ID</name>
-        <field>Category_ID_P</field>
+        <name>Country_Name</name>
+        <field>Country_Name</field>
+        <condition>=</condition>
+        <name2/>
       </key>
       <value>
-        <name>NumberOfPrisoners</name>
-        <rename>NumberOfPrisoners</rename>
-        <default/>
-        <type>Integer</type>
+        <name>Country_ID</name>
+        <rename>Country_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>Country_Name</name>
+        <rename>Country_Name</rename>
+        <update>Y</update>
       </value>
     </lookup>
     <attributes/>
@@ -3863,14 +4140,14 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1648</xloc>
-      <yloc>576</yloc>
+      <xloc>1568</xloc>
+      <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Fact_VictimsConflict</name>
-    <type>IfNull</type>
+    <name>Event Table</name>
+    <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -3879,21 +4156,187 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <replaceAllByValue/>
-    <replaceAllMask/>
-    <selectFields>Y</selectFields>
-    <selectValuesType>N</selectValuesType>
-    <setEmptyStringAll>N</setEmptyStringAll>
-    <valuetypes>
-      </valuetypes>
-    <fields>
-      <field>
+    <connection>MySQLPDIConnection</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>conflictdatawarehouse</schema>
+      <table>dim_event</table>
+      <key>
+        <name>Event_ID</name>
+        <field>Event_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>Event_Name</name>
+        <field>Event_Name</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>Event_Date</name>
+        <field>Event_Date</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>Event_ID</name>
+        <rename>Event_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>Event_Name</name>
+        <rename>Event_Name</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>Event_Date</name>
+        <rename>Event_Date</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1184</xloc>
+      <yloc>496</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert / update 2 2</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>MySQLPDIConnection</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>conflictdatawarehouse</schema>
+      <table>dim_category</table>
+      <key>
+        <name>Category_ID</name>
+        <field>Category_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>Category_Name</name>
+        <field>Category_Name</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>Category_ID</name>
+        <rename>Category_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>Category_Name</name>
+        <rename>Category_Name</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1168</xloc>
+      <yloc>432</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert / update 2 3</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>MySQLPDIConnection</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>conflictdatawarehouse</schema>
+      <table>fact_victimsconflict</table>
+      <key>
+        <name>Country_ID</name>
+        <field>Country_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>Event_ID</name>
+        <field>Event_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>Category_ID</name>
+        <field>Category_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>NumberOfDeaths</name>
+        <field>NumberOfDeaths</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
         <name>NumberOfPrisoners</name>
-        <value>0</value>
-        <mask/>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
+        <field>NumberOfPrisoners</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>Country_ID</name>
+        <rename>Country_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>Event_ID</name>
+        <rename>Event_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>Category_ID</name>
+        <rename>Category_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>NumberOfDeaths</name>
+        <rename>NumberOfDeaths</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>NumberOfPrisoners</name>
+        <rename>NumberOfPrisoners</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -3904,7 +4347,7 @@ var [Event_Year, Event_Name] = matches ? [getYearFromDate(matches[1]), removeNum
     </remotesteps>
     <GUI>
       <xloc>1792</xloc>
-      <yloc>576</yloc>
+      <yloc>672</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

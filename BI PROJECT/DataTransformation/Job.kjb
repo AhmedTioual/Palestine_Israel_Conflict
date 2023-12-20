@@ -301,15 +301,15 @@
       <minutes>0</minutes>
       <weekDay>1</weekDay>
       <DayOfMonth>1</DayOfMonth>
-      <parallel>N</parallel>
+      <parallel>Y</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>48</xloc>
-      <yloc>208</yloc>
+      <xloc>16</xloc>
+      <yloc>256</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Transformation</name>
+      <name>VictimsConflict_ETL</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
@@ -343,12 +343,12 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>416</xloc>
-      <yloc>32</yloc>
+      <xloc>784</xloc>
+      <yloc>96</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Transformation 2</name>
+      <name>Automate_VictimsConflict_Data</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
@@ -382,12 +382,12 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>208</xloc>
-      <yloc>32</yloc>
+      <xloc>368</xloc>
+      <yloc>96</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Transformation 3</name>
+      <name>Automate_PalestinianExodus_Data</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
@@ -421,12 +421,12 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>208</xloc>
-      <yloc>112</yloc>
+      <xloc>368</xloc>
+      <yloc>176</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Transformation 4</name>
+      <name>PalestinianExodus_ETL</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
@@ -460,12 +460,12 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>416</xloc>
-      <yloc>112</yloc>
+      <xloc>784</xloc>
+      <yloc>176</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Transformation 5</name>
+      <name>Automate_IsraeliSettlements_Inhabitants_Data</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
@@ -499,18 +499,18 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>208</xloc>
-      <yloc>208</yloc>
+      <xloc>368</xloc>
+      <yloc>256</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Transformation 6</name>
+      <name>IsraeliSettlements_Inhabitants_ETL</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>C:\Users\tioua\OneDrive\Desktop\BI PROJECT\DataTransformation\PalestinianExodus_Transformation\PDI TRANSFORMATION\PalestinianExodus_ETL_pentaho.ktr</filename>
+      <filename>C:/Users/tioua/OneDrive/Desktop/BI PROJECT/DataTransformation/IsraeliSettlements_Inhabitants_Transformation/PDI TRANSFORMATION/IsraeliSettlements_Inhabitants_ETL_pentaho.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -538,12 +538,12 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>416</xloc>
-      <yloc>208</yloc>
+      <xloc>784</xloc>
+      <yloc>256</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Transformation 7</name>
+      <name>Automate_IsraeliSettlements_Data</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
@@ -577,12 +577,12 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>208</xloc>
-      <yloc>304</yloc>
+      <xloc>368</xloc>
+      <yloc>336</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Transformation 8</name>
+      <name>IsraeliSettlements_ETL</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
@@ -616,12 +616,12 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>416</xloc>
-      <yloc>304</yloc>
+      <xloc>784</xloc>
+      <yloc>336</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Transformation 9</name>
+      <name>Automate_DemographicsOfIsrael_Data</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
@@ -655,12 +655,12 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>208</xloc>
-      <yloc>400</yloc>
+      <xloc>368</xloc>
+      <yloc>432</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Transformation 10</name>
+      <name>DemographicsOfIsrael_ETL</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
@@ -694,8 +694,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>416</xloc>
-      <yloc>400</yloc>
+      <xloc>784</xloc>
+      <yloc>432</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -706,15 +706,15 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>640</xloc>
-      <yloc>208</yloc>
+      <xloc>1120</xloc>
+      <yloc>256</yloc>
       <attributes_kjc/>
     </entry>
   </entries>
   <hops>
     <hop>
       <from>Start</from>
-      <to>Transformation 2</to>
+      <to>Automate_VictimsConflict_Data</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -722,8 +722,8 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Transformation 2</from>
-      <to>Transformation</to>
+      <from>Automate_VictimsConflict_Data</from>
+      <to>VictimsConflict_ETL</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -732,7 +732,7 @@
     </hop>
     <hop>
       <from>Start</from>
-      <to>Transformation 3</to>
+      <to>Automate_PalestinianExodus_Data</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -740,8 +740,8 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Transformation 3</from>
-      <to>Transformation 4</to>
+      <from>Automate_PalestinianExodus_Data</from>
+      <to>PalestinianExodus_ETL</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -750,7 +750,7 @@
     </hop>
     <hop>
       <from>Start</from>
-      <to>Transformation 5</to>
+      <to>Automate_IsraeliSettlements_Inhabitants_Data</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -758,8 +758,8 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Transformation 5</from>
-      <to>Transformation 6</to>
+      <from>Automate_IsraeliSettlements_Inhabitants_Data</from>
+      <to>IsraeliSettlements_Inhabitants_ETL</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -768,7 +768,7 @@
     </hop>
     <hop>
       <from>Start</from>
-      <to>Transformation 7</to>
+      <to>Automate_IsraeliSettlements_Data</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -776,8 +776,8 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Transformation 7</from>
-      <to>Transformation 8</to>
+      <from>Automate_IsraeliSettlements_Data</from>
+      <to>IsraeliSettlements_ETL</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -786,7 +786,7 @@
     </hop>
     <hop>
       <from>Start</from>
-      <to>Transformation 9</to>
+      <to>Automate_DemographicsOfIsrael_Data</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -794,8 +794,8 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Transformation 9</from>
-      <to>Transformation 10</to>
+      <from>Automate_DemographicsOfIsrael_Data</from>
+      <to>DemographicsOfIsrael_ETL</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -803,7 +803,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Transformation</from>
+      <from>VictimsConflict_ETL</from>
       <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -812,7 +812,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Transformation 4</from>
+      <from>PalestinianExodus_ETL</from>
       <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -821,7 +821,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Transformation 6</from>
+      <from>IsraeliSettlements_Inhabitants_ETL</from>
       <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -830,7 +830,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Transformation 8</from>
+      <from>IsraeliSettlements_ETL</from>
       <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -839,7 +839,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Transformation 10</from>
+      <from>DemographicsOfIsrael_ETL</from>
       <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>

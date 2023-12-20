@@ -24,7 +24,7 @@ def automateExtractionData(url,payload):
         "Connection": "keep-alive",
         "Content-Length": "451",
         "Content-Type": "application/json",
-        "Cookie": "deflect_challenge3=JSa+O9xGLjM7TJb4NWQ0Wc3YmwYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABJwAAAABlc/i/; deflect_session=sSA%2FxHmWe58AAAAAZXOWTw%3D%3D",
+        "Cookie": "deflect_challenge3=REMb7evj/2K4RMVg17w3IkLk2CUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAC8AAAAABlg1eZ; deflect_session=uI0rtE9FSsAAAAAAZYL1KQ%253D%253D",
         "Host": "statistics.btselem.org",
         "Origin": "https://statistics.btselem.org",
         "Referer": url,
@@ -51,7 +51,7 @@ def automateExtractionData(url,payload):
 
 def automateExtractionData_parallel(pages):
     try:
-        with ThreadPoolExecutor(max_workers=10) as executor:
+        with ThreadPoolExecutor(max_workers=5) as executor:
             # Use list comprehension to submit tasks to the ThreadPoolExecutor
             tasks = [executor.submit(automateExtractionData, key,value) for key,value in pages.items()]
             
@@ -81,3 +81,5 @@ pages = {
 #Execute automateExtractionData() function 
 
 automateExtractionData_parallel(pages)
+
+#automateExtractionData("https://statistics.btselem.org/en/all-fatalities/by-date-of-incident/pal-by-israel-sec/all?section=overall",{"query":{"bool":{"must":[{"bool":{"must":[{"range":{"EventDate":{"gte":970185600000,"lte":1696633199000}}},{"bool":{"filter":{"term":{"not_inc":True}}}},{"bool":{"must":[{"terms":{"EventRegionName.key.keyword":["b40f813","5f6a04e","65b3a57"]}},{"terms":{"tot_nifga_kibuz.key.keyword":["75c9ac7"]}},{"terms":{"tot_pogea_kibuz.key.keyword":["4d9ecf3"]}},{"term":{"not_inc":True}}]}}]}}]}},"sort":[{"EventDate":{"order":"desc"}}],"aggs":{},"size":10000})

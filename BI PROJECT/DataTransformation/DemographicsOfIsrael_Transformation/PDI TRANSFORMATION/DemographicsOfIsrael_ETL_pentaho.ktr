@@ -484,6 +484,69 @@ World Bank API</note>
       <drawshadow>Y</drawshadow>
     </notepad>
   </notepads>
+  <connection>
+    <name>MySQLPDIConnection</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>conflictdatawarehouse</database>
+    <port>3306</port>
+    <username>root</username>
+    <password>Encrypted 2beecc6a71fc69ecbf949ff298cc2fe83</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>EXTRA_OPTION_MYSQL.defaultFetchSize</code>
+        <attribute>500</attribute>
+      </attribute>
+      <attribute>
+        <code>EXTRA_OPTION_MYSQL.useCursorFetch</code>
+        <attribute>true</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>3306</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>STREAM_RESULTS</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
   <order>
     <hop>
       <from>Filter rows</from>
@@ -546,11 +609,6 @@ World Bank API</note>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Unique years</from>
-      <to>Add Year ID</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Result</from>
       <to>Select values 3</to>
       <enabled>Y</enabled>
@@ -558,21 +616,6 @@ World Bank API</note>
     <hop>
       <from>Sort rows 2</from>
       <to>Unique Countries</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Unique Countries</from>
-      <to>Add Country ID</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Add Year ID</from>
-      <to>Dim_Year</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Add Country ID</from>
-      <to>Dim_Country</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -631,7 +674,7 @@ World Bank API</note>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Population Data</from>
+      <from>www.macrotrends.net</from>
       <to>Sort rows 3</to>
       <enabled>Y</enabled>
     </hop>
@@ -645,82 +688,47 @@ World Bank API</note>
       <to>Fact_DemographicsOfIsrael </to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>Unique years</from>
+      <to>Generate ID</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Generate ID</from>
+      <to>Dim_Year</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Unique Countries</from>
+      <to>Generate Unique ID</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Generate Unique ID</from>
+      <to>Dim_Country</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Dim_Country</from>
+      <to>Insert / update 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Dim_Year</from>
+      <to>Insert / update 2 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Fact_DemographicsOfIsrael </from>
+      <to>fact_demographicsofisrael_db</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
-  <step>
-    <name>Add Country ID</name>
-    <type>Sequence</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <valuename>Country_ID</valuename>
-    <use_database>N</use_database>
-    <connection/>
-    <schema/>
-    <seqname>SEQ_</seqname>
-    <use_counter>Y</use_counter>
-    <counter_name/>
-    <start_at>1</start_at>
-    <increment_by>1</increment_by>
-    <max_value>999999999</max_value>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>880</xloc>
-      <yloc>112</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Add Year ID</name>
-    <type>Sequence</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <valuename>Year_ID</valuename>
-    <use_database>N</use_database>
-    <connection/>
-    <schema/>
-    <seqname>SEQ_</seqname>
-    <use_counter>Y</use_counter>
-    <counter_name/>
-    <start_at>1</start_at>
-    <increment_by>1</increment_by>
-    <max_value>999999999</max_value>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>864</xloc>
-      <yloc>336</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step>
     <name>Dim_Country</name>
     <type>SelectValues</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -803,10 +811,10 @@ World Bank API</note>
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>//Script here
 
-if (Year_ID == 1){
+if (Year_ID == 25){
 	var Population = 806000;
 }
-if(Year_ID == 2){
+if(Year_ID == 38){
 	var Population = 1200000;
 }</jsScript_script>
       </jsScript>
@@ -871,6 +879,104 @@ if(Year_ID == 2){
     </GUI>
   </step>
   <step>
+    <name>Generate ID</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>//Use a mathematical formula to generate a unique ID
+
+var Year_ID = ((Year_Name * 13) % 100) + 1;</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>Year_ID</name>
+        <rename>Year_ID</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>864</xloc>
+      <yloc>336</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Generate Unique ID</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>function generateUniqueCode(str, maxLength) {
+    var hash = str.toLowerCase().split('').reduce(function (hash, char) {
+        return (hash &lt;&lt; 5) - hash + char.charCodeAt(0);
+    }, 0);
+    return Math.abs(hash) % Math.pow(10, maxLength);
+}
+
+var Country_ID = generateUniqueCode(Country_Name, 3);
+</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>Country_ID</name>
+        <rename>Country_ID</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>880</xloc>
+      <yloc>112</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Generate rows</name>
     <type>RowGenerator</type>
     <description/>
@@ -923,6 +1029,114 @@ if(Year_ID == 2){
     <GUI>
       <xloc>32</xloc>
       <yloc>112</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert / update 2</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>MySQLPDIConnection</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>conflictdatawarehouse</schema>
+      <table>dim_country</table>
+      <key>
+        <name>Country_ID</name>
+        <field>Country_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>Country_Name</name>
+        <field>Country_Name</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>Country_ID</name>
+        <rename>Country_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>Country_Name</name>
+        <rename>Country_Name</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1120</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert / update 2 2</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>MySQLPDIConnection</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>conflictdatawarehouse</schema>
+      <table>dim_year</table>
+      <key>
+        <name>Year_ID</name>
+        <field>Year_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>Year_Name</name>
+        <field>Year_Name</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>Year_ID</name>
+        <rename>Year_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>Year_Name</name>
+        <rename>Year_Name</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1136</xloc>
+      <yloc>336</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1111,7 +1325,7 @@ var [EurasianNations,UsaCanada,France,Uk,Argentina,SouthAfrica,Ethiopia] = [resu
     </GUI>
   </step>
   <step>
-    <name>Population Data</name>
+    <name>www.macrotrends.net</name>
     <type>ExcelInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -2283,6 +2497,82 @@ var [EurasianNations,UsaCanada,France,Uk,Argentina,SouthAfrica,Ethiopia] = [resu
     <GUI>
       <xloc>704</xloc>
       <yloc>336</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>fact_demographicsofisrael_db</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>MySQLPDIConnection</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>conflictdatawarehouse</schema>
+      <table>fact_demographicsofisrael</table>
+      <key>
+        <name>Year_ID</name>
+        <field>Year_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>Country_ID</name>
+        <field>Country_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>NumberOfMigrants</name>
+        <field>NumberOfMigrants</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>Population</name>
+        <field>Population</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>Year_ID</name>
+        <rename>Year_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>Country_ID</name>
+        <rename>Country_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>NumberOfMigrants</name>
+        <rename>NumberOfMigrants</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>Population</name>
+        <rename>Population</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1280</xloc>
+      <yloc>704</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

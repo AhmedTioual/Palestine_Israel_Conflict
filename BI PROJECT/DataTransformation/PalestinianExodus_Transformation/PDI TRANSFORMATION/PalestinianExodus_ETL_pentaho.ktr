@@ -498,15 +498,73 @@
       <drawshadow>Y</drawshadow>
     </notepad>
   </notepads>
+  <connection>
+    <name>MySQLPDIConnection</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>conflictdatawarehouse</database>
+    <port>3306</port>
+    <username>root</username>
+    <password>Encrypted 2beecc6a71fc69ecbf949ff298cc2fe83</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>EXTRA_OPTION_MYSQL.defaultFetchSize</code>
+        <attribute>500</attribute>
+      </attribute>
+      <attribute>
+        <code>EXTRA_OPTION_MYSQL.useCursorFetch</code>
+        <attribute>true</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>3306</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>STREAM_RESULTS</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
   <order>
     <hop>
       <from>CSV file input</from>
       <to>Remove Duplicated Rows</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Group by Country</from>
-      <to>Add Country ID</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -520,23 +578,8 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Add Country ID 2</from>
-      <to>Dim_Year</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Group by year</from>
-      <to>Add Country ID 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Select Category field 2</from>
       <to>Sort rows 2 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Sort rows 2 2</from>
-      <to>Group by year</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -555,38 +598,13 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Dim_Year</from>
-      <to>Modified JavaScript value</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Add Period ID</from>
-      <to>Dim_Period</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Group by Country 2</from>
-      <to>Add Period ID</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Select Period Name</from>
       <to>Sort rows 2 3</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Sort rows 2 3</from>
-      <to>Group by Country 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Modified JavaScript value</from>
       <to>Select Period Name</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Add Country ID</from>
-      <to>Dim_Country</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -649,112 +667,67 @@
       <to>Fact_PalestinianExodus</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>Group by year</from>
+      <to>Modified JavaScript value 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Modified JavaScript value 2</from>
+      <to>Dim_Year</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort rows 2 2</from>
+      <to>Group by year</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Dim_Year</from>
+      <to>Modified JavaScript value</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Group by Country</from>
+      <to>Generate Unique ID</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Generate Unique ID</from>
+      <to>Dim_Country</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort rows 2 3</from>
+      <to>Unique rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Unique rows</from>
+      <to>Dim_Period</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Dim_Year</from>
+      <to>Insert / update</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Dim_Period</from>
+      <to>Insert / update 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Dim_Country</from>
+      <to>Insert / update 2 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Fact_PalestinianExodus</from>
+      <to>Insert / update 2 2 2</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
-  <step>
-    <name>Add Country ID</name>
-    <type>Sequence</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <valuename>valuename</valuename>
-    <use_database>N</use_database>
-    <connection/>
-    <schema/>
-    <seqname>SEQ_</seqname>
-    <use_counter>Y</use_counter>
-    <counter_name/>
-    <start_at>1</start_at>
-    <increment_by>1</increment_by>
-    <max_value>999999999</max_value>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>912</xloc>
-      <yloc>80</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Add Country ID 2</name>
-    <type>Sequence</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <valuename>valuename</valuename>
-    <use_database>N</use_database>
-    <connection/>
-    <schema/>
-    <seqname>SEQ_</seqname>
-    <use_counter>Y</use_counter>
-    <counter_name/>
-    <start_at>1</start_at>
-    <increment_by>1</increment_by>
-    <max_value>999999999</max_value>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>688</xloc>
-      <yloc>288</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Add Period ID</name>
-    <type>Sequence</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <valuename>valuename</valuename>
-    <use_database>N</use_database>
-    <connection/>
-    <schema/>
-    <seqname>SEQ_</seqname>
-    <use_counter>Y</use_counter>
-    <counter_name/>
-    <start_at>1</start_at>
-    <increment_by>1</increment_by>
-    <max_value>999999999</max_value>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1200</xloc>
-      <yloc>400</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step>
     <name>CSV file input</name>
     <type>CsvInput</type>
@@ -858,7 +831,7 @@
     </remotesteps>
     <GUI>
       <xloc>48</xloc>
-      <yloc>16</yloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -866,7 +839,7 @@
     <name>Dim_Country</name>
     <type>SelectValues</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -875,8 +848,8 @@
     </partitioning>
     <fields>
       <field>
-        <name>valuename</name>
-        <rename>Country_ID</rename>
+        <name>Country_ID</name>
+        <rename/>
       </field>
       <field>
         <name>Country</name>
@@ -902,7 +875,7 @@
     <name>Dim_Period</name>
     <type>SelectValues</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -911,8 +884,8 @@
     </partitioning>
     <fields>
       <field>
-        <name>valuename</name>
-        <rename>Period_ID</rename>
+        <name>Period_ID</name>
+        <rename/>
       </field>
       <field>
         <name>periodName</name>
@@ -938,7 +911,7 @@
     <name>Dim_Year</name>
     <type>SelectValues</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -947,31 +920,14 @@
     </partitioning>
     <fields>
       <field>
-        <name>valuename</name>
-        <rename>Year_ID</rename>
+        <name>Year_ID</name>
+        <rename/>
       </field>
       <field>
         <name>Year</name>
         <rename>Year_Name</rename>
       </field>
       <select_unspecified>N</select_unspecified>
-      <meta>
-        <name>Year_Name</name>
-        <rename>Year_Name</rename>
-        <type>Integer</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask/>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale/>
-        <date_format_timezone/>
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding/>
-        <decimal_symbol/>
-        <grouping_symbol/>
-        <currency_symbol/>
-        <storage_type/>
-      </meta>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -984,6 +940,58 @@
     <GUI>
       <xloc>784</xloc>
       <yloc>288</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Fact_PalestinianExodus</name>
+    <type>GroupBy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <all_rows>N</all_rows>
+    <ignore_aggregate>N</ignore_aggregate>
+    <field_ignore/>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>grp</prefix>
+    <add_linenr>N</add_linenr>
+    <linenr_fieldname/>
+    <give_back_row>N</give_back_row>
+    <group>
+      <field>
+        <name>Country_ID</name>
+      </field>
+      <field>
+        <name>Year_ID</name>
+      </field>
+      <field>
+        <name>Period_ID</name>
+      </field>
+    </group>
+    <fields>
+      <field>
+        <aggregate>NumberOfPalestinianRefugees</aggregate>
+        <subject>Total</subject>
+        <type>SUM</type>
+        <valuefield/>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1600</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1019,6 +1027,58 @@
     <GUI>
       <xloc>240</xloc>
       <yloc>176</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Generate Unique ID</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>function generateUniqueCode(str, maxLength) {
+    var hash = str.toLowerCase().split('').reduce(function (hash, char) {
+        return (hash &lt;&lt; 5) - hash + char.charCodeAt(0);
+    }, 0);
+    return Math.abs(hash) % Math.pow(10, maxLength);
+}
+
+var Country_ID = generateUniqueCode(Country, 3);
+</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>Country_ID</name>
+        <rename>Country_ID</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>944</xloc>
+      <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1069,52 +1129,6 @@
     </GUI>
   </step>
   <step>
-    <name>Group by Country 2</name>
-    <type>GroupBy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <all_rows>N</all_rows>
-    <ignore_aggregate>N</ignore_aggregate>
-    <field_ignore/>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>grp</prefix>
-    <add_linenr>N</add_linenr>
-    <linenr_fieldname/>
-    <give_back_row>N</give_back_row>
-    <group>
-      <field>
-        <name>periodName</name>
-      </field>
-    </group>
-    <fields>
-      <field>
-        <aggregate>Nbr</aggregate>
-        <subject>periodName</subject>
-        <type>COUNT_DISTINCT</type>
-        <valuefield/>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1088</xloc>
-      <yloc>400</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>Group by year</name>
     <type>GroupBy</type>
     <description/>
@@ -1155,7 +1169,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>576</xloc>
+      <xloc>544</xloc>
       <yloc>288</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1177,14 +1191,23 @@
       <jsScript>
         <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>if (Year_Name >= 1948 &amp;&amp; Year_Name &lt; 1967) {
-    periodName = '1948-';
+        <jsScript_script>function generateID(year1, year2) {
+    const concatenatedYears = parseInt(year1.toString() + year2.toString(), 10);
+    const id = ((concatenatedYears * 13) % 100) + 1;
+    return id;
+}
+
+if (Year_Name >= 1948 &amp;&amp; Year_Name &lt; 1967) {
+    periodName = '1948-1967';
+	var Period_ID = generateID(1948,1967);
 }
 if (Year_Name >= 1967 &amp;&amp; Year_Name &lt; 2023) {
-    periodName = '1967-';
+    periodName = '1967-2023';
+	var Period_ID = generateID(1967,2023);
 }
 if (Year_Name >= 2023){
     periodName = '2023-';
+	var Period_ID = generateID(2023,2024);
 }</jsScript_script>
       </jsScript>
     </jsScripts>
@@ -1193,6 +1216,14 @@ if (Year_Name >= 2023){
         <name>periodName</name>
         <rename>periodName</rename>
         <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>Period_ID</name>
+        <rename>Period_ID</rename>
+        <type>Integer</type>
         <length>-1</length>
         <precision>-1</precision>
         <replace>N</replace>
@@ -1208,6 +1239,60 @@ if (Year_Name >= 2023){
     </remotesteps>
     <GUI>
       <xloc>896</xloc>
+      <yloc>288</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Modified JavaScript value 2</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>//Use a mathematical formula to generate a unique ID
+
+var Year_ID = ((Year * 13) % 100) + 1;</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>Year_ID</name>
+        <rename>Year_ID</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>Year</name>
+        <rename>Year_Name</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>672</xloc>
       <yloc>288</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1262,8 +1347,56 @@ if (Year_Name >= 2023){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>48</xloc>
-      <yloc>80</yloc>
+      <xloc>240</xloc>
+      <yloc>48</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Result</name>
+    <type>StreamLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <from>Modified JavaScript value</from>
+    <input_sorted>N</input_sorted>
+    <preserve_memory>Y</preserve_memory>
+    <sorted_list>N</sorted_list>
+    <integer_pair>N</integer_pair>
+    <lookup>
+      <key>
+        <name>Year</name>
+        <field>Year_Name</field>
+      </key>
+      <value>
+        <name>periodName</name>
+        <rename>periodName</rename>
+        <default/>
+        <type>String</type>
+      </value>
+      <value>
+        <name>Year_ID</name>
+        <rename>Year_ID</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>896</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1388,6 +1521,9 @@ if (Year_Name >= 2023){
       <field>
         <name>periodName</name>
       </field>
+      <field>
+        <name>Period_ID</name>
+      </field>
       <select_unspecified>N</select_unspecified>
     </fields>
     <attributes/>
@@ -1401,6 +1537,88 @@ if (Year_Name >= 2023){
     <GUI>
       <xloc>896</xloc>
       <yloc>400</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>Country_ID</name>
+      </field>
+      <field>
+        <name>Year_ID</name>
+      </field>
+      <field>
+        <name>Period_ID</name>
+      </field>
+      <field>
+        <name>Total</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1392</xloc>
+      <yloc>176</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort rows</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>Year</name>
+        <ascending>N</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>144</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1441,7 +1659,7 @@ if (Year_Name >= 2023){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>496</xloc>
+      <xloc>512</xloc>
       <yloc>80</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1508,7 +1726,7 @@ if (Year_Name >= 2023){
     <unique_rows>N</unique_rows>
     <fields>
       <field>
-        <name>periodName</name>
+        <name>Period_ID</name>
         <ascending>N</ascending>
         <case_sensitive>N</case_sensitive>
         <collator_enabled>N</collator_enabled>
@@ -1525,8 +1743,50 @@ if (Year_Name >= 2023){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>992</xloc>
+      <xloc>1056</xloc>
       <yloc>400</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort rows 3</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>Year_ID</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1472</xloc>
+      <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1568,136 +1828,6 @@ if (Year_Name >= 2023){
     </remotesteps>
     <GUI>
       <xloc>1296</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>String operations</name>
-    <type>StringOperations</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>Country of asylum</in_stream_name>
-        <out_stream_name/>
-        <trim_type>both</trim_type>
-        <lower_upper>upper</lower_upper>
-        <padding_type/>
-        <pad_char/>
-        <pad_len/>
-        <init_cap/>
-        <mask_xml/>
-        <digits/>
-        <remove_special_characters/>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>48</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>Year</name>
-        <ascending>N</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>144</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Result</name>
-    <type>StreamLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <from>Modified JavaScript value</from>
-    <input_sorted>N</input_sorted>
-    <preserve_memory>Y</preserve_memory>
-    <sorted_list>N</sorted_list>
-    <integer_pair>N</integer_pair>
-    <lookup>
-      <key>
-        <name>Year</name>
-        <field>Year_Name</field>
-      </key>
-      <value>
-        <name>periodName</name>
-        <rename>periodName</rename>
-        <default/>
-        <type>String</type>
-      </value>
-      <value>
-        <name>Year_ID</name>
-        <rename>Year_ID</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>896</xloc>
       <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1745,8 +1875,8 @@ if (Year_Name >= 2023){
     </GUI>
   </step>
   <step>
-    <name>Select values</name>
-    <type>SelectValues</type>
+    <name>String operations</name>
+    <type>StringOperations</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1757,63 +1887,17 @@ if (Year_Name >= 2023){
     </partitioning>
     <fields>
       <field>
-        <name>Country_ID</name>
-        <rename/>
-      </field>
-      <field>
-        <name>Year_ID</name>
-        <rename/>
-      </field>
-      <field>
-        <name>Period_ID</name>
-        <rename/>
-      </field>
-      <field>
-        <name>Total</name>
-        <rename/>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1392</xloc>
-      <yloc>176</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows 3</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>Year_ID</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
+        <in_stream_name>Country of asylum</in_stream_name>
+        <out_stream_name/>
+        <trim_type>both</trim_type>
+        <lower_upper>upper</lower_upper>
+        <padding_type/>
+        <pad_char/>
+        <pad_len/>
+        <init_cap/>
+        <mask_xml/>
+        <digits/>
+        <remove_special_characters/>
       </field>
     </fields>
     <attributes/>
@@ -1825,14 +1909,14 @@ if (Year_Name >= 2023){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1472</xloc>
+      <xloc>48</xloc>
       <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Fact_PalestinianExodus</name>
-    <type>GroupBy</type>
+    <name>Unique rows</name>
+    <type>Unique</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -1841,33 +1925,254 @@ if (Year_Name >= 2023){
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <all_rows>N</all_rows>
-    <ignore_aggregate>N</ignore_aggregate>
-    <field_ignore/>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>grp</prefix>
-    <add_linenr>N</add_linenr>
-    <linenr_fieldname/>
-    <give_back_row>N</give_back_row>
-    <group>
-      <field>
-        <name>Country_ID</name>
-      </field>
-      <field>
-        <name>Year_ID</name>
-      </field>
-      <field>
-        <name>Period_ID</name>
-      </field>
-    </group>
+    <count_rows>N</count_rows>
+    <count_field/>
+    <reject_duplicate_row>N</reject_duplicate_row>
+    <error_description/>
     <fields>
       <field>
-        <aggregate>NumberOfPalestinianRefugees</aggregate>
-        <subject>Total</subject>
-        <type>SUM</type>
-        <valuefield/>
+        <name>Period_ID</name>
+        <case_insensitive>N</case_insensitive>
       </field>
     </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1200</xloc>
+      <yloc>400</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert / update</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>MySQLPDIConnection</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>conflictdatawarehouse</schema>
+      <table>Dim_Year</table>
+      <key>
+        <name>Year_ID</name>
+        <field>Year_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>Year_Name</name>
+        <field>Year_Name</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>Year_ID</name>
+        <rename>Year_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>Year_Name</name>
+        <rename>Year_Name</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>784</xloc>
+      <yloc>400</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert / update 2</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>MySQLPDIConnection</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>conflictdatawarehouse</schema>
+      <table>Dim_Period</table>
+      <key>
+        <name>Period_ID</name>
+        <field>Period_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>Period_Name</name>
+        <field>Period_Name</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>Period_ID</name>
+        <rename>Period_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>Period_Name</name>
+        <rename>Period_Name</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1344</xloc>
+      <yloc>304</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert / update 2 2</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>MySQLPDIConnection</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>conflictdatawarehouse</schema>
+      <table>Dim_Country</table>
+      <key>
+        <name>Country_ID</name>
+        <field>Country_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>Country_Name</name>
+        <field>Country_Name</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>Country_ID</name>
+        <rename>Country_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>Country_Name</name>
+        <rename>Country_Name</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1424</xloc>
+      <yloc>32</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert / update 2 2 2</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>MySQLPDIConnection</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>conflictdatawarehouse</schema>
+      <table>Fact_PalestinianExodus</table>
+      <key>
+        <name>Country_ID</name>
+        <field>Country_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>Year_ID</name>
+        <field>Year_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>Period_ID</name>
+        <field>Period_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>NumberOfPalestinianRefugees</name>
+        <field>NumberOfPalestinianRefugees</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>Country_ID</name>
+        <rename>Country_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>Year_ID</name>
+        <rename>Year_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>Period_ID</name>
+        <rename>Period_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>NumberOfPalestinianRefugees</name>
+        <rename>NumberOfPalestinianRefugees</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -1878,7 +2183,7 @@ if (Year_Name >= 2023){
     </remotesteps>
     <GUI>
       <xloc>1600</xloc>
-      <yloc>176</yloc>
+      <yloc>304</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
